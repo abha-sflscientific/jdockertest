@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+    Jupyternotebook: 
+        image: jupyter/minimal-notebook
+        container_name: notebook1
+        volumes:
+            - C:/code/notebook:/home/jovyan/work
+        ports:
+            - 8888:8888   
+    nginx:
+        image: nginx
+        container_name: nginx1

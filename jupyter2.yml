@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jupyter-notebook
+  labels:
+    app: jupyter-notebook
+    app: jupyter-notebook2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jupyter-notebook
+      app: jupyter-notebook2
+  template:
+    metadata:
+      labels:
+        app: jupyter-notebook
+    spec:
+      containers:
+      - name: minimal-notebook
+        image: jupyter/minimal-notebook:latest
+        ports:
+        - containerPort: 8888
+        command: ["start-notebook.sh"]
+        args: ["--NotebookApp.token=''"]
+  template:
+    metadata:
+      labels:
+        app: jupyter-notebook2
+    spec:
+      containers:
+      - name: minimal-notebook2
+        image: jupyter/minimal-notebook:latest
+        ports:
+        - containerPort: 8889
+        command: ["start-notebook.sh"]
+        args: ["--NotebookApp.token=''"]
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jupyter-notebook
+spec:
+  type: NodePort
+  selector:
+    app: jupyter-notebook
+  ports:
+  - protocol: TCP
+    name: book-1
+    nodePort: 30040
+    port: 8888
+    targetPort: 8888
+  - protocol: TCP
+    name: book-2
+    nodePort: 30041
+    port: 8889
+    targetPort: 8889

@@ -1,0 +1,47 @@
+commands
+
+
+docker run -p 8888:8888 -v C:/code/notebook:/home/jovyan/work jupyter/minimal-notebook
+docker container ls
+docker container rm -f
+docker system prune --all
+
+cd C:\code\jupyter test\dockercompose
+docker-compose up
+docker-compose up -d
+docker container ls
+docker container ps --all
+
+cd C:\code\jupyter test
+kubectl get namespace
+
+kubectl -n jupyter create deployment jupyter-notebook --image jupyter/minimal-notebook:latest
+kubectl -n jupyter expose deployment.apps/jupyter-notebook --port 8888 --name jupyternotebooknp --type NodePort
+kubectl -n jupyter get all
+kubectl -n jupyter get pods
+kubectl -n jupyter logs jupyter-notebook-74cbd46688-xknrw
+kubectl -n jupyter delete services --all
+kubectl -n jupyter delete deployments --all
+
+kubectl apply -f jupyter.yml --namespace jupyter
+kubectl -n jupyter get all
+kubectl -n jupyter delete services --all
+kubectl -n jupyter delete deployments --all
+
+kubectl apply -f jupytergitdep.yml --namespace jupyter
+kubectl -n jupyter get all
+kubectl -n jupyter delete services --all
+kubectl -n jupyter delete deployments --all
+
+kubectl apply -f jupyterinit.yml --namespace jupyter
+kubectl -n jupyter get all
+kubectl -n jupyter delete services --all
+kubectl -n jupyter delete deployments --all
+
+kubectl apply -f jupyterinitsync.yml --namespace jupyter
+kubectl -n jupyter get all
+kubectl -n jupyter delete services --all
+kubectl -n jupyter delete deployments --all
+kubectl -n jupyter get pods
+kubectl -n jupyter logs <> minimal-notebook2
+
